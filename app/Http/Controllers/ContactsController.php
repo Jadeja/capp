@@ -55,6 +55,9 @@ class ContactsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
+            'email' => 'required|email|max:255',            
+            'phone' => 'required|numeric',            
+            'dob' => 'required',            
         ]);
 
         $request->user()->contacts()->create([

@@ -23,12 +23,19 @@
                                 <input type="text" name="name" id="contact-name" class="form-control" value="{{ old('name') }}">
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="contact-name" class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-6">
-                                <input type="text" name="email" id="contact-email" class="form-control" value="{{ old('email') }}">
+                                <input type="email" name="email" id="contact-email" class="form-control" value="{{ old('email') }}">
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="contact-name" class="col-sm-3 control-label">Phone</label>
                             <div class="col-sm-6">
@@ -50,7 +57,7 @@
                         <div class="form-group">
                             <label for="contact-dob" class="col-sm-3 control-label">Date Of Birth</label>
                             <div class="col-sm-6">
-                                <input type="text" name="dob" id="contact-dob" class="form-control" value="{{ old('dob') }}">
+                                <input type="text" name="dob" id="contact-dob"  class="form-control" value="{{ old('dob') }}">
                             </div>
                         </div>                                                                                                                        
                         <!-- <input type="text" name="email" id="contact-email" class="form-control" value="{{ old('contact') }}">
