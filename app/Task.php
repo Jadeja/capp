@@ -4,6 +4,7 @@ namespace App;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
@@ -12,8 +13,11 @@ class Task extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+
+    use SoftDeletes;
+    protected $fillable = ['name','user_id'];
     
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -30,4 +34,10 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function taskt()
+    {
+        
+    }
+
 }

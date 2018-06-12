@@ -16,6 +16,7 @@ class ContactsRepository
     public function forUser(User $user)
     {
         return Contact::where('user_id', $user->id)
+                    ->where('is_active','1')
                     ->orderBy('created_at', 'asc')
                     ->get();
     }

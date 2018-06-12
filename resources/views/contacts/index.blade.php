@@ -17,7 +17,7 @@
                         {{ csrf_field() }}
 
                         <!-- Task Name -->
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="contact-name" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="contact-name" class="form-control" value="{{ old('name') }}">
@@ -29,14 +29,14 @@
                             <div class="col-sm-6">
                                 <input type="email" name="email" id="contact-email" class="form-control" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
+                                <!--     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
+ -->                                @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                             <label for="contact-name" class="col-sm-3 control-label">Phone</label>
                             <div class="col-sm-6">
                                 <input type="text" name="phone" id="contact-phone" class="form-control" value="{{ old('phone') }}">
@@ -54,12 +54,13 @@
                                 <input type="text" name="company" id="contact-company" class="form-control" value="{{ old('company') }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
                             <label for="contact-dob" class="col-sm-3 control-label">Date Of Birth</label>
                             <div class="col-sm-6">
                                 <input type="text" name="dob" id="contact-dob"  class="form-control" value="{{ old('dob') }}">
                             </div>
-                        </div>                                                                                                                        
+                        </div>       
+
                         <!-- <input type="text" name="email" id="contact-email" class="form-control" value="{{ old('contact') }}">
  -->
 
@@ -91,10 +92,16 @@
                                 <th>Address</th>
                                 <th>Company</th>
                                 <th>D O B</th>
+                                <th>Age</th>
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody>
-                                @foreach ($contacts as $ct)
+                                  @foreach ($contacts as $ct)
+                               <?php
+                                    $from = new DateTime($ct->dob);
+                                    $to   = new DateTime('today');
+                                    $age = $from->diff($to)->y;
+                                ?>
                                     <tr>
                                         <td class="table-text"><div>{{ $ct->name }}</div></td>
                                         <td class="table-text"><div>{{ $ct->email }}</div></td>
@@ -102,13 +109,14 @@
                                         <td class="table-text"><div>{{ $ct->address }}</div></td>
                                         <td class="table-text"><div>{{ $ct->company }}</div></td>
                                         <td class="table-text"><div>{{ $ct->dob }}</div></td>
+                                        <td class="table-text"><div>{{ $age }}</div></td>
 
                                         <!-- Task Delete Button -->
                                         <td>
                                             <form action="{{url('contact/'. $ct->id)}}" method="POST">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-
+                        
                                                 <button type="submit" id="delete-contact-{{ $ct->id }}" class="btn btn-danger">
                                                     <i class="fa fa-btn fa-trash"></i>Delete
                                                 </button>

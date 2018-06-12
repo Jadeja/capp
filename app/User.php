@@ -40,5 +40,31 @@ class User extends Authenticatable
     public function contacts()
     {
         return $this->hasMany(Contact::class);
+    } 
+
+
+    //to get all task of the user
+    public function task()
+    {
+        return $this->hasOne('App\Task');
+    }
+
+
+    public function photos()
+    {
+        return $this->morphMany('App\Photo','imageable');
     }    
+
+
+    public function getNameAttribute($name)
+    {
+        return strtoupper($name);
+    }
+
+
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strtoupper($name);
+    }
+
 }
